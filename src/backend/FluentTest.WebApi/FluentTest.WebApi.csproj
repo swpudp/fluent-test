@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FluentTest.WebExtension\FluentTest.WebExtension.csproj" />
+    <ProjectReference Include="..\Services\UserCenter\FluentTest.UserCenter.Application\FluentTest.UserCenter.Application.csproj" />
   </ItemGroup>
 
 </Project>

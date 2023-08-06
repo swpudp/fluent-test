@@ -7,6 +7,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\FluentTest.UserCenter.Model\FluentTest.UserCenter.Model.csproj" />
+		<ProjectReference Include="..\FluentTest.UserCenter.Service\FluentTest.UserCenter.Service.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
+
 </Project>

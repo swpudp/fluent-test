@@ -1,5 +1,9 @@
-using log4net.Appender;
 using FluentTest.WebExtension;
+using FluentTest.UserCenter.Application;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using System.ComponentModel;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using FluentTest.WebExtension.Mvc;
 
 namespace FluentTest.WebApi
 {
@@ -8,14 +12,14 @@ namespace FluentTest.WebApi
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
             // Add services to the container.
-
-            builder.Services.AddControllers();
+            builder.Services.AddApiControllers()
+                .AddUserCenterPart();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Logging.AddLog4Net();
+            builder.Services.AddUserCenterServices();
 
             var app = builder.Build();
 

@@ -51,7 +51,7 @@ namespace FluentTest.WebExtension
             {
                 logger = loggerFactory.CreateLogger(typeof(ApplicationExtension));
             }
-            IExceptionHandlerFeature exceptionDetails = httpContext.Features.Get<IExceptionHandlerFeature>();
+            IExceptionHandlerFeature? exceptionDetails = httpContext.Features.Get<IExceptionHandlerFeature?>();
             Exception? ex = exceptionDetails?.Error;
             if (ex == null)
             {

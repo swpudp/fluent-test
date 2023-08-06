@@ -3,9 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentTest.WebApi", "FluentTest.WebApi\FluentTest.WebApi.csproj", "{09DE9CD6-4059-4A8E-BB38-A22DD1C3AA70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentTest.WebApi", "FluentTest.WebApi\FluentTest.WebApi.csproj", "{09DE9CD6-4059-4A8E-BB38-A22DD1C3AA70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentTest.WebExtension", "FluentTest.WebExtension\FluentTest.WebExtension.csproj", "{7EB72796-AE34-440E-B682-5A1058BFC60C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentTest.WebExtension", "FluentTest.WebExtension\FluentTest.WebExtension.csproj", "{7EB72796-AE34-440E-B682-5A1058BFC60C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{AC912EDF-D36A-412C-8667-8891BC012C7D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserCenter", "UserCenter", "{FE689981-E8BB-46ED-A9D5-0D29E08ACAB0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TenantCenter", "TenantCenter", "{2EC21720-7DCB-4B34-A5CE-D2B1FFB1C203}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthCenter", "AuthCenter", "{D5CCB1FA-DB49-4106-9CDC-DA03D11B4A46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentTest.UserCenter.Application", "Services\UserCenter\FluentTest.UserCenter.Application\FluentTest.UserCenter.Application.csproj", "{0FBF7AAB-4BE8-49D1-B56E-B35529BA3317}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentTest.UserCenter.Service", "Services\UserCenter\FluentTest.UserCenter.Service\FluentTest.UserCenter.Service.csproj", "{A17945EF-4D19-428C-B04C-B6BC1ABFAEC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentTest.UserCenter.Model", "Services\UserCenter\FluentTest.UserCenter.Model\FluentTest.UserCenter.Model.csproj", "{0EB24682-212D-4AFD-99E5-9ACFA73EF939}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentTest.UserCenter.DataAccess", "Services\UserCenter\FluentTest.UserCenter.DataAccess\FluentTest.UserCenter.DataAccess.csproj", "{C02DA975-C431-4CA8-A82E-C20AA85DE69C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +37,34 @@ Global
 		{7EB72796-AE34-440E-B682-5A1058BFC60C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EB72796-AE34-440E-B682-5A1058BFC60C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EB72796-AE34-440E-B682-5A1058BFC60C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FBF7AAB-4BE8-49D1-B56E-B35529BA3317}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FBF7AAB-4BE8-49D1-B56E-B35529BA3317}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FBF7AAB-4BE8-49D1-B56E-B35529BA3317}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FBF7AAB-4BE8-49D1-B56E-B35529BA3317}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A17945EF-4D19-428C-B04C-B6BC1ABFAEC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A17945EF-4D19-428C-B04C-B6BC1ABFAEC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A17945EF-4D19-428C-B04C-B6BC1ABFAEC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A17945EF-4D19-428C-B04C-B6BC1ABFAEC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EB24682-212D-4AFD-99E5-9ACFA73EF939}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EB24682-212D-4AFD-99E5-9ACFA73EF939}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EB24682-212D-4AFD-99E5-9ACFA73EF939}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EB24682-212D-4AFD-99E5-9ACFA73EF939}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C02DA975-C431-4CA8-A82E-C20AA85DE69C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C02DA975-C431-4CA8-A82E-C20AA85DE69C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C02DA975-C431-4CA8-A82E-C20AA85DE69C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C02DA975-C431-4CA8-A82E-C20AA85DE69C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FE689981-E8BB-46ED-A9D5-0D29E08ACAB0} = {AC912EDF-D36A-412C-8667-8891BC012C7D}
+		{2EC21720-7DCB-4B34-A5CE-D2B1FFB1C203} = {AC912EDF-D36A-412C-8667-8891BC012C7D}
+		{D5CCB1FA-DB49-4106-9CDC-DA03D11B4A46} = {AC912EDF-D36A-412C-8667-8891BC012C7D}
+		{0FBF7AAB-4BE8-49D1-B56E-B35529BA3317} = {FE689981-E8BB-46ED-A9D5-0D29E08ACAB0}
+		{A17945EF-4D19-428C-B04C-B6BC1ABFAEC0} = {FE689981-E8BB-46ED-A9D5-0D29E08ACAB0}
+		{0EB24682-212D-4AFD-99E5-9ACFA73EF939} = {FE689981-E8BB-46ED-A9D5-0D29E08ACAB0}
+		{C02DA975-C431-4CA8-A82E-C20AA85DE69C} = {FE689981-E8BB-46ED-A9D5-0D29E08ACAB0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {678E578A-2DAD-4294-9C92-B4F05B0370D0}
