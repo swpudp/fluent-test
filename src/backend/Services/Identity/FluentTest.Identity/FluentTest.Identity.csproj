@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.0" />
+		<PackageReference Include="OpenSsl.Crypto.Utility" Version="1.0.0.5" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\..\..\..\Dapper.Extensions.Expression\Dapper.Extensions.Expression\Dapper.Extensions.Expression.csproj" />
+	  <ProjectReference Include="..\..\..\FluentTest.Infrastructure.NpgSql\FluentTest.Infrastructure.NpgSql.csproj" />
+	  <ProjectReference Include="..\..\..\FluentTest.Infrastructure\FluentTest.Infrastructure.csproj" />
+	</ItemGroup>
+
+</Project>

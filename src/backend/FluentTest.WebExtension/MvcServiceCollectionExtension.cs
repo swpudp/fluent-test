@@ -26,8 +26,7 @@ namespace FluentTest.WebExtension
                 {
                     List<Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateEntry> errors = context.ModelState.Values.ToList();
                     string msg = string.Join(";", errors.Select(item => string.Join(";", item.Errors.Select(x => x.ErrorMessage).ToList())).ToList());
-                    ObjectResult result = new ObjectResult(new WrappedResult(StatusCodes.Status400BadRequest, msg));
-                    result.StatusCode = StatusCodes.Status400BadRequest;
+                    ObjectResult result = new(new WrappedResult(StatusCodes.Status400BadRequest, msg));
                     //add `using System.Net.Mime;` to resolve MediaTypeNames
                     result.ContentTypes.Add(MediaTypeNames.Application.Json);
                     result.ContentTypes.Add(MediaTypeNames.Application.Xml);

@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper.Extensions.Expression" Version="1.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="7.0.10" />
+    <PackageReference Include="Npgsql" Version="7.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\FluentTest.Infrastructure\FluentTest.Infrastructure.csproj" />
     <ProjectReference Include="..\FluentTest.UserCenter.Model\FluentTest.UserCenter.Model.csproj" />
   </ItemGroup>
 
