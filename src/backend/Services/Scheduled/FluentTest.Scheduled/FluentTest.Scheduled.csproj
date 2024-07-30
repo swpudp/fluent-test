@@ -19,11 +19,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Dapper.Extensions.Expression" Version="1.0.10" />
 		<PackageReference Include="Quartz" Version="3.11.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\..\..\..\Dapper.Extensions.Expression\Dapper.Extensions.Expression\Dapper.Extensions.Expression.csproj" />
 	  <ProjectReference Include="..\..\..\FluentTest.Infrastructure\FluentTest.Infrastructure.csproj" />
 	</ItemGroup>
 
