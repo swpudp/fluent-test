@@ -1,13 +1,12 @@
 ﻿using Dapper.Extensions.Expression;
-using FluentTest.Infrastructure.NpgSql;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace FluentTest.Identity.Stores
 {
-    public class RoleStore(IStoreExecutor storeExecutor, IdentityErrorDescriber describer) : RoleStoreBase<IdentityRole, string, IdentityUserRole, IdentityRoleClaim>(describer)
+    public class RoleStore(IIdentityStoreExecutor storeExecutor, IdentityErrorDescriber describer) : RoleStoreBase<IdentityRole, string, IdentityUserRole, IdentityRoleClaim>(describer)
     {
-        private readonly IStoreExecutor _storeExecutor = storeExecutor;
+        private readonly IIdentityStoreExecutor _storeExecutor = storeExecutor;
         private readonly IdentityErrorDescriber _describer = describer;
 
         public override IQueryable<IdentityRole> Roles => throw new NotImplementedException();

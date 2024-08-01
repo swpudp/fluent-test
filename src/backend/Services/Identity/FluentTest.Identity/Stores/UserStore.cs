@@ -1,15 +1,14 @@
 ﻿using Dapper;
 using Dapper.Extensions.Expression;
 using FluentTest.Infrastructure;
-using FluentTest.Infrastructure.NpgSql;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace FluentTest.Identity.Stores
 {
-    public class UserStore(IStoreExecutor storeExecutor, IdentityErrorDescriber describer) : UserStoreBase<IdentityUser, string, IdentityUserClaim, IdentityUserLogin, IdentityUserToken>(describer)
+    public class UserStore(IIdentityStoreExecutor storeExecutor, IdentityErrorDescriber describer) : UserStoreBase<IdentityUser, string, IdentityUserClaim, IdentityUserLogin, IdentityUserToken>(describer)
     {
-        private readonly IStoreExecutor _storeExecutor = storeExecutor;
+        private readonly IIdentityStoreExecutor _storeExecutor = storeExecutor;
         private readonly IdentityErrorDescriber _describer = describer;
 
         #region 用户操作

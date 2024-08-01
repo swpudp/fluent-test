@@ -1,11 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using FluentTest.Scheduled.Stories;
+using Microsoft.Extensions.Configuration;
 
 namespace FluentTest.Infrastructure.NpgSql
 {
-    public class ScheduledNpgSqlStoreExecutor : AbstractNpgSqlStoreExecutor
+    public class ScheduledNpgSqlStoreExecutor(IConfiguration configuration) : AbstractNpgSqlStoreExecutor(configuration), IScheduledStoreExecutor
     {
-        protected ScheduledNpgSqlStoreExecutor(IConfiguration configuration) : base(configuration) { }
-
         protected override string ConnectionName => "Scheduled";
     }
 }

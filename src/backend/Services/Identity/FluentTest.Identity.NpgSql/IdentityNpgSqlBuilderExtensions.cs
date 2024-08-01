@@ -1,4 +1,5 @@
-﻿using FluentTest.Infrastructure.NpgSql;
+﻿using FluentTest.Identity.Stores;
+using FluentTest.Infrastructure.NpgSql;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentTest.Identity.NpgSql
@@ -7,7 +8,7 @@ namespace FluentTest.Identity.NpgSql
     {
         public static IServiceCollection UseNpgSql(this IServiceCollection services)
         {
-            services.AddScoped<IStoreExecutor, IdentityNpgSqlStoreExecutor>();
+            services.AddScoped<IIdentityStoreExecutor, IdentityNpgSqlStoreExecutor>();
             return services;
         }
     }

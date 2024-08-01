@@ -7,11 +7,11 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <NoWarn>1701;1702;8618;8600</NoWarn>
+		<NoWarn>1701;1702;8618;8600</NoWarn>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	  <NoWarn>1701;1702;8618;8600</NoWarn>
+		<NoWarn>1701;1702;8618;8600</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -21,10 +21,14 @@
 	<ItemGroup>
 		<PackageReference Include="Dapper.Extensions.Expression" Version="1.0.10" />
 		<PackageReference Include="Quartz" Version="3.11.0" />
+		<PackageReference Include="Quartz.AspNetCore" Version="3.11.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\FluentTest.Infrastructure\FluentTest.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\..\FluentTest.Infrastructure.NpgSql\FluentTest.Infrastructure.NpgSql.csproj" />
+		<ProjectReference Include="..\..\..\FluentTest.Infrastructure\FluentTest.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\..\Infrastructure\FluentTest.Infrastructure.NpgSql\FluentTest.Infrastructure.NpgSql.csproj" />
+		<ProjectReference Include="..\..\..\Infrastructure\FluentTest.Infrastructure\FluentTest.Infrastructure.csproj" />
 	</ItemGroup>
 
 </Project>

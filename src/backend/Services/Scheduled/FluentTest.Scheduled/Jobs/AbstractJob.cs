@@ -31,7 +31,6 @@ namespace FluentTest.Scheduled.Jobs
 
         private Task BeforeExecute(IJobExecutionContext context)
         {
-            context.Put("executeStart", DateTime.Now.Ticks);
             return Task.CompletedTask;
         }
 
@@ -42,24 +41,28 @@ namespace FluentTest.Scheduled.Jobs
 
         private async Task CreateJobLog(IJobExecutionContext context)
         {
-            JobLog log = new JobLog();
-            log.Id = ObjectId.GenerateNewId().ToString();
-            log.TenantId = context.Get("tenantId")?.ToString();
-            log.JobName = context.JobDetail.Key.Name;
-            log.CreateTime = DateTime.Now;
-            log.CreatorId = "job";
-            log.CreatorName = "job";
-            if (long.TryParse(context.Get("executeStart")?.ToString(), out long executeStart))
+            JobLog log = new JobLog
             {
-                log.StartTime = new DateTime(executeStart);
-                log.EndTime = DateTime.Now;
-                log.Duration = DateTime.Now.Ticks - executeStart;
+                Id = ObjectId.GenerateNewId().ToString(),
+
+                JobName = context.JobDetail.Key.Name,
+                JobGroup = context.JobDetail.Key.Group,
+                CreateTime = DateTime.Now,
+                CreatorId = "job",
+                CreatorName = "job",
+                StartTime = new DateTime(context.FireTimeUtc.Ticks),
+                EndTime = DateTime.Now,
+                Duration = context.JobRunTime.TotalMilliseconds
+            };
+            if (context.MergedJobDataMap.TryGetString("tenantId", out string tenantId))
+            {
+                log.TenantId = tenantId;
             }
             object? exObj = context.Get("ex");
             if (exObj is Exception e)
             {
                 log.JobStatus = JobExecutionStatus.Error;
-                log.FailReason = e?.Message;
+                log.FailReason = e?.ToString();
             }
             else
             {

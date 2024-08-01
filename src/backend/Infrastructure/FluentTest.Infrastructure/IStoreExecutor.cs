@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace FluentTest.Infrastructure.NpgSql
+namespace FluentTest.Infrastructure
 {
     public interface IStoreExecutor : IDisposable
     {

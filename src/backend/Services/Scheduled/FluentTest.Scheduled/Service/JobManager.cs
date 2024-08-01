@@ -8,9 +8,9 @@ using Quartz.Impl.Matchers;
 
 namespace FluentTest.Scheduled.Service
 {
-    public class JobManager(IScheduler scheduler)
+    public class JobManager(ISchedulerFactory schedulerFactory)
     {
-        private readonly IScheduler _scheduler = scheduler;
+        private readonly ISchedulerFactory _schedulerFactory = schedulerFactory;
 
         public IDictionary<JobType, Func<AddJobRequest, IJobDetail>> JobDelegates { get; } = new Dictionary<JobType, Func<AddJobRequest, IJobDetail>>
         {
@@ -20,7 +20,8 @@ namespace FluentTest.Scheduled.Service
 
         public async Task AddJob(AddJobRequest request)
         {
-            bool hasJob = await _scheduler.CheckExists(JobKey.Create(request.JobName, request.JobGroup));
+            IScheduler scheduler = await _schedulerFactory.GetScheduler();
+            bool hasJob = await scheduler.CheckExists(JobKey.Create(request.JobName, request.JobGroup));
             if (hasJob)
             {
                 throw new BusinessExpcetion("任务已存在");
@@ -39,18 +40,19 @@ namespace FluentTest.Scheduled.Service
                 .WithSchedule(cronBuilder)
                 .Build();
 
-            await _scheduler.ScheduleJob(jobDetail, trigger);
+            await scheduler.ScheduleJob(jobDetail, trigger);
         }
 
         public async Task Reschedule(RescheduleRequest request)
         {
+            IScheduler scheduler = await _schedulerFactory.GetScheduler();
             IScheduleBuilder cronBuilder = CreateCronScheduleBuilder(request.Cron);
             ITrigger trigger = TriggerBuilder.Create()
                 .ForJob(request.JobName, request.JobGroup)
                 .WithIdentity(request.JobName, request.JobGroup)
                 .WithSchedule(cronBuilder)
                 .Build();
-            await _scheduler.RescheduleJob(new TriggerKey(request.JobName, request.JobGroup), trigger);
+            await scheduler.RescheduleJob(new TriggerKey(request.JobName, request.JobGroup), trigger);
             if (request.JobStatus == TriggerState.Paused)
             {
                 await scheduler.PauseJob(trigger.JobKey);
@@ -59,7 +61,8 @@ namespace FluentTest.Scheduled.Service
 
         public async Task<List<JobView>> ListJobsAsync()
         {
-            IReadOnlyCollection<string> groups = await _scheduler.GetJobGroupNames();
+            IScheduler scheduler = await _schedulerFactory.GetScheduler();
+            IReadOnlyCollection<string> groups = await scheduler.GetJobGroupNames();
             List<JobView> jobs = new List<JobView>();
             foreach (string item in groups)
             {
@@ -70,62 +73,71 @@ namespace FluentTest.Scheduled.Service
 
         public async Task<JobView> GetJobAsync(string name, string group)
         {
+            IScheduler scheduler = await _schedulerFactory.GetScheduler();
             JobKey jobKey = JobKey.Create(name, group);
-            IJobDetail jobDetail = await _scheduler.GetJobDetail(jobKey);
+            IJobDetail jobDetail = await scheduler.GetJobDetail(jobKey);
             if (jobDetail == null)
             {
                 return null;
             }
-            var triggers = await scheduler.GetTriggersOfJob(jobKey);
+            IReadOnlyCollection<ITrigger> triggers = await scheduler.GetTriggersOfJob(jobKey);
             return await CreateJob(jobDetail, triggers.ElementAt(0));
         }
 
         public async Task PauseJob(string name, string group)
         {
-            await _scheduler.PauseJob(JobKey.Create(name, group));
+            IScheduler scheduler = await _schedulerFactory.GetScheduler();
+            await scheduler.PauseJob(JobKey.Create(name, group));
         }
 
         public async Task ResumeJob(string name, string group)
         {
-            await _scheduler.ResumeJob(JobKey.Create(name, group));
+            IScheduler scheduler = await _schedulerFactory.GetScheduler();
+            await scheduler.ResumeJob(JobKey.Create(name, group));
         }
 
         public async Task RemoveJob(string name, string group)
         {
-            await _scheduler.DeleteJob(JobKey.Create(name, group));
+            IScheduler scheduler = await _schedulerFactory.GetScheduler();
+            await scheduler.DeleteJob(JobKey.Create(name, group));
         }
 
         public async Task PauseGroupJobs(string groupName)
         {
-            await _scheduler.PauseJobs(GroupMatcher<JobKey>.GroupEquals(groupName));
+            IScheduler scheduler = await _schedulerFactory.GetScheduler();
+            await scheduler.PauseJobs(GroupMatcher<JobKey>.GroupEquals(groupName));
         }
 
         public async Task ResumeGroupJobs(string groupName)
         {
-            await _scheduler.ResumeJobs(GroupMatcher<JobKey>.GroupEquals(groupName));
+            IScheduler scheduler = await _schedulerFactory.GetScheduler();
+            await scheduler.ResumeJobs(GroupMatcher<JobKey>.GroupEquals(groupName));
         }
 
         public async Task PauseAllAsync()
         {
-            await _scheduler.PauseAll();
+            IScheduler scheduler = await _schedulerFactory.GetScheduler();
+            await scheduler.PauseAll();
         }
 
         public async Task ResumeAllAsync()
         {
-            await _scheduler.ResumeAll();
+            IScheduler scheduler = await _schedulerFactory.GetScheduler();
+            await scheduler.ResumeAll();
         }
 
         private async Task ListGroupJobs(List<JobView> jobs, string groupName)
         {
-            IReadOnlyCollection<JobKey> jobKeys = await _scheduler.GetJobKeys(GroupMatcher<JobKey>.GroupEquals(groupName));
+            IScheduler scheduler = await _schedulerFactory.GetScheduler();
+            IReadOnlyCollection<JobKey> jobKeys = await scheduler.GetJobKeys(GroupMatcher<JobKey>.GroupEquals(groupName));
             foreach (JobKey item in jobKeys)
             {
-                IJobDetail jobDetail = await _scheduler.GetJobDetail(item);
+                IJobDetail jobDetail = await scheduler.GetJobDetail(item);
                 if (jobDetail == null)
                 {
                     continue;
                 }
-                IReadOnlyCollection<ITrigger> triggers = await _scheduler.GetTriggersOfJob(item);
+                IReadOnlyCollection<ITrigger> triggers = await scheduler.GetTriggersOfJob(item);
                 foreach (ITrigger trigger in triggers)
                 {
                     JobView job = await CreateJob(jobDetail, trigger);
@@ -150,13 +162,17 @@ namespace FluentTest.Scheduled.Service
 
         private async Task CreateTrigger(JobView job, ITrigger trigger)
         {
+            IScheduler scheduler = await _schedulerFactory.GetScheduler();
             job.TriggerGroup = trigger.Key.Group;
             job.TriggerName = trigger.Key.Name;
             //todo 表达式获取
-            //job.Cron=
+            if (trigger is ICronTrigger cronTrigger)
+            {
+                job.Cron = cronTrigger.CronExpressionString;
+            }
             job.LastFire = trigger.GetPreviousFireTimeUtc();
             job.NextFire = trigger.GetNextFireTimeUtc();
-            job.JobStatus = await _scheduler.GetTriggerState(trigger.Key);
+            job.JobStatus = await scheduler.GetTriggerState(trigger.Key);
             job.StartTime = trigger.StartTimeUtc;
             job.EndTime = trigger.EndTimeUtc;
         }

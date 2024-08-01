@@ -1,15 +1,10 @@
 ﻿using Dapper.Extensions.Expression;
 using FluentTest.Infrastructure;
 using FluentTest.Scheduled.EnumCollection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FluentTest.Scheduled.Model
 {
-    [TableNaming(NamingPolicy.SnakeCase), FieldNaming(NamingPolicy.SnakeCase)]
+    [Table("qrtz_job_log"), TableNaming(NamingPolicy.SnakeCase), FieldNaming(NamingPolicy.SnakeCase)]
     public class JobLog : IBaseEntity, IUniqueKeyEntity<string>, ITenantEntity<string>, ICreationEntity<string>
     {
         public string Id { get; set; }
@@ -18,11 +13,13 @@ namespace FluentTest.Scheduled.Model
 
         public string JobName { get; set; }
 
-        public DateTime? StartTime { get; set; }
+        public string JobGroup { get; set; }
+
+        public DateTime StartTime { get; set; }
 
         public DateTime EndTime { get; set; }
 
-        public long? Duration { get; set; }
+        public double Duration { get; set; }
 
         /// <summary>
         /// 执行状态

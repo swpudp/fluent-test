@@ -12,6 +12,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\..\Infrastructure\FluentTest.Infrastructure.NpgSql\FluentTest.Infrastructure.NpgSql.csproj" />
+	  <ProjectReference Include="..\..\..\Infrastructure\FluentTest.Infrastructure\FluentTest.Infrastructure.csproj" />
 	  <ProjectReference Include="..\FluentTest.Identity\FluentTest.Identity.csproj" />
 	</ItemGroup>
 

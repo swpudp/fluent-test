@@ -1,10 +1,4 @@
 ﻿using FluentTest.Scheduled.EnumCollection;
-using Quartz;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FluentTest.Scheduled.Request
 {
@@ -21,7 +15,5 @@ namespace FluentTest.Scheduled.Request
         public string Cron {  get;set; }
 
         public Dictionary<string, string> JobData { get; set; }
-
-        public TriggerState JobStatus { get; set; }
     }
 }

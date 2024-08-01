@@ -1,18 +1,3 @@
-/* Copyright 2010-present MongoDB Inc.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-* http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
-
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
@@ -468,7 +453,7 @@ namespace FluentTest.Infrastructure
         /// </summary>
         /// <param name="other">The other ObjectId.</param>
         /// <returns>A 32-bit signed integer that indicates whether this ObjectId is less than, equal to, or greather than the other.</returns>
-        public int CompareTo(ObjectId other)
+        public readonly int CompareTo(ObjectId other)
         {
             int result = ((uint)_a).CompareTo((uint)other._a);
             if (result != 0) { return result; }
@@ -482,7 +467,7 @@ namespace FluentTest.Infrastructure
         /// </summary>
         /// <param name="rhs">The other ObjectId.</param>
         /// <returns>True if the two ObjectIds are equal.</returns>
-        public bool Equals(ObjectId rhs)
+        public readonly bool Equals(ObjectId rhs)
         {
             return
                 _a == rhs._a &&
@@ -497,9 +482,9 @@ namespace FluentTest.Infrastructure
         /// <returns>True if the other object is an ObjectId and equal to this one.</returns>
         public override bool Equals(object obj)
         {
-            if (obj is ObjectId)
+            if (obj is ObjectId id)
             {
-                return Equals((ObjectId)obj);
+                return Equals(id);
             }
             else
             {
@@ -524,7 +509,7 @@ namespace FluentTest.Infrastructure
         /// Converts the ObjectId to a byte array.
         /// </summary>
         /// <returns>A byte array.</returns>
-        public byte[] ToByteArray()
+        public readonly byte[] ToByteArray()
         {
             var bytes = new byte[12];
             ToByteArray(bytes, 0);
@@ -536,7 +521,7 @@ namespace FluentTest.Infrastructure
         /// </summary>
         /// <param name="destination">The destination.</param>
         /// <param name="offset">The offset.</param>
-        public void ToByteArray(byte[] destination, int offset)
+        public readonly void ToByteArray(byte[] destination, int offset)
         {
             if (destination == null)
             {
@@ -565,7 +550,7 @@ namespace FluentTest.Infrastructure
         /// Returns a string representation of the value.
         /// </summary>
         /// <returns>A string representation of the value.</returns>
-        public override string ToString()
+        public override readonly string ToString()
         {
             var c = new char[24];
             c[0] = ToHexChar(_a >> 28 & 0x0f);

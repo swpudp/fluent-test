@@ -1,11 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using FluentTest.Identity.Stores;
+using Microsoft.Extensions.Configuration;
 
 namespace FluentTest.Infrastructure.NpgSql
 {
-    public class IdentityNpgSqlStoreExecutor : AbstractNpgSqlStoreExecutor
+    public class IdentityNpgSqlStoreExecutor(IConfiguration configuration) : AbstractNpgSqlStoreExecutor(configuration), IIdentityStoreExecutor
     {
-        protected IdentityNpgSqlStoreExecutor(IConfiguration configuration) : base(configuration) { }
-
         protected override string ConnectionName => "Identity";
     }
 }

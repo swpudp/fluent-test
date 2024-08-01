@@ -13,9 +13,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FluentTest.WebExtension\FluentTest.WebExtension.csproj" />
-    <ProjectReference Include="..\Services\Identity\FluentTest.Identity.NpgSql\FluentTest.Identity.NpgSql.csproj" />
+    <ProjectReference Include="..\Services\Identity\FluentTest.Identity.MySql\FluentTest.Identity.MySql.csproj" />
     <ProjectReference Include="..\Services\Identity\FluentTest.Identity\FluentTest.Identity.csproj" />
-    <ProjectReference Include="..\Services\Scheduled\FluentTest.Scheduled.NpgSql\FluentTest.Scheduled.NpgSql.csproj" />
+    <ProjectReference Include="..\Services\Scheduled\FluentTest.Scheduled.MySql\FluentTest.Scheduled.MySql.csproj" />
     <ProjectReference Include="..\Services\Scheduled\FluentTest.Scheduled\FluentTest.Scheduled.csproj" />
   </ItemGroup>
 

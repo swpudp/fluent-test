@@ -1,14 +1,13 @@
-﻿using FluentTest.Infrastructure.NpgSql;
-using FluentTest.Scheduled.Stories;
+﻿using FluentTest.Scheduled.Stories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 
-namespace FluentTest.Identity.NpgSql
+namespace FluentTest.Scheduled.MySql
 {
-    public static class ScheduledNpgSqlBuilderExtensions
+    public static class ScheduledMySqlBuilderExtensions
     {
-        public static IServiceCollection UseNpgSql(this IServiceCollection services, IConfigurationSection configurationSection)
+        public static IServiceCollection UseMySql(this IServiceCollection services, IConfigurationSection configurationSection)
         {
             services.Configure<QuartzOptions>(configurationSection);
             services.AddQuartz(cfg =>
@@ -23,7 +22,7 @@ namespace FluentTest.Identity.NpgSql
                     p.PerformSchemaValidation = false;
                     p.UseProperties = true;
                     p.RetryInterval = TimeSpan.FromSeconds(15);
-                    p.UsePostgres(s =>
+                    p.UseMySql(s =>
                     {
                         s.TablePrefix = "qrtz_";
                         s.ConnectionStringName = "Scheduled";
@@ -42,7 +41,7 @@ namespace FluentTest.Identity.NpgSql
                 cfg.WaitForJobsToComplete = true;
                 cfg.AwaitApplicationStarted = true;
             });
-            services.AddScoped<IScheduledStoreExecutor, ScheduledNpgSqlStoreExecutor>();
+            services.AddScoped<IScheduledStoreExecutor, ScheduledMySqlStoreExecutor>();
             return services;
         }
     }

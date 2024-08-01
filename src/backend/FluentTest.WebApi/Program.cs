@@ -1,9 +1,9 @@
-using FluentTest.WebExtension;
 using FluentTest.Identity;
-using Microsoft.AspNetCore.Identity;
+using FluentTest.Identity.MySql;
 using FluentTest.Infrastructure;
-using FluentTest.Identity.NpgSql;
-using FluentTest.WebApi.Controllers;
+using FluentTest.Scheduled.MySql;
+using FluentTest.WebExtension;
+using Microsoft.AspNetCore.Identity;
 
 namespace FluentTest.WebApi
 {
@@ -18,10 +18,10 @@ namespace FluentTest.WebApi
                 .AddScheduledPart();
 
             builder.Services
-                .AddCustomerIdentity(x => IdentityNpgSqlBuilderExtensions.UseNpgSql(x))
+                .AddCustomerIdentity(x => IdentityMySqlBuilderExtensions.UseMySql(x))
                 .AddDefaultTokenProviders();
 
-            builder.Services.AddScheduledServices(x => ScheduledNpgSqlBuilderExtensions.UseNpgSql(x));
+            builder.Services.AddScheduledServices(x => ScheduledMySqlBuilderExtensions.UseMySql(x, builder.Configuration.GetSection("Quartz")));
 
             builder.Services.Configure<IdentityOptions>(opt =>
             {
@@ -48,7 +48,9 @@ namespace FluentTest.WebApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddHttpClient();
             builder.Logging.AddLog4Net();
+
 
             WebApplication app = builder.Build();
 

@@ -1,14 +1,14 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Npgsql;
+using MySql.Data.MySqlClient;
 using System.Data;
 
-namespace FluentTest.Infrastructure.NpgSql
+namespace FluentTest.Infrastructure.MySql
 {
-    public abstract class AbstractNpgSqlStoreExecutor : IStoreExecutor
+    public abstract class AbstractMySqlStoreExecutor
     {
         private readonly IConfiguration _configuration;
-        private readonly NpgsqlConnection _connection;
-        public AbstractNpgSqlStoreExecutor(IConfiguration configuration)
+        private readonly MySqlConnection _connection;
+        public AbstractMySqlStoreExecutor(IConfiguration configuration)
         {
             _configuration = configuration;
             _connection = CreateConnection();
@@ -16,12 +16,10 @@ namespace FluentTest.Infrastructure.NpgSql
 
         protected abstract string ConnectionName { get; }
 
-        private NpgsqlConnection CreateConnection()
+        private MySqlConnection CreateConnection()
         {
             string connectionString = _configuration.GetConnectionString(ConnectionName);
-            NpgsqlDataSourceBuilder builder = new(connectionString);
-            NpgsqlDataSource dataSource = builder.Build();
-            return dataSource.OpenConnection();
+            return new MySqlConnection(connectionString);
         }
 
         public Task ExecuteAsync(Func<IDbConnection, Task> action)

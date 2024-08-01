@@ -1,5 +1,6 @@
 ﻿using FluentTest.Scheduled.Application;
 using FluentTest.Scheduled.Service;
+using FluentTest.Scheduled.Stories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentTest.Identity
@@ -15,6 +16,7 @@ namespace FluentTest.Identity
         public static IServiceCollection AddScheduledServices(this IServiceCollection services, Action<IServiceCollection> action)
         {
             action(services);
+            services.AddScoped<IJobLogStore, JobLogStore>();
             services.AddScoped<JobManager>();
             return services;
         }
