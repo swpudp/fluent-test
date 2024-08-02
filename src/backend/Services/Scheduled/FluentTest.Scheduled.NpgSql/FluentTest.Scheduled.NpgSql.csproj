@@ -11,7 +11,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\FluentTest.Infrastructure.NpgSql\FluentTest.Infrastructure.NpgSql.csproj" />
 		<ProjectReference Include="..\..\..\Infrastructure\FluentTest.Infrastructure.NpgSql\FluentTest.Infrastructure.NpgSql.csproj" />
 		<ProjectReference Include="..\..\..\Infrastructure\FluentTest.Infrastructure\FluentTest.Infrastructure.csproj" />
 		<ProjectReference Include="..\FluentTest.Scheduled\FluentTest.Scheduled.csproj" />

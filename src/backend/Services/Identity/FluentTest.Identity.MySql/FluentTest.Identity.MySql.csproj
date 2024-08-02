@@ -11,9 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\FluentTest.Infrastructure.MySql\FluentTest.Infrastructure.MySql.csproj" />
     <ProjectReference Include="..\..\..\Infrastructure\FluentTest.Infrastructure.MySql\FluentTest.Infrastructure.MySql.csproj" />
-    <ProjectReference Include="..\..\..\Infrastructure\FluentTest.Infrastructure\FluentTest.Infrastructure.csproj" />
     <ProjectReference Include="..\FluentTest.Identity\FluentTest.Identity.csproj" />
   </ItemGroup>
 

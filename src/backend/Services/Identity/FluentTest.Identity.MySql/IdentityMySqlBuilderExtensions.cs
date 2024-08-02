@@ -1,14 +1,15 @@
 ﻿using FluentTest.Identity.Stores;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentTest.Identity.MySql
 {
     public static class IdentityMySqlBuilderExtensions
     {
-        public static IServiceCollection UseMySql(this IServiceCollection services)
+        public static IdentityBuilder UseMySql(this IdentityBuilder builder)
         {
-            services.AddScoped<IIdentityStoreExecutor, IdentityMySqlStoreExecutor>();
-            return services;
+            builder.Services.AddScoped<IIdentityStoreExecutor, IdentityMySqlStoreExecutor>();
+            return builder;
         }
     }
 }

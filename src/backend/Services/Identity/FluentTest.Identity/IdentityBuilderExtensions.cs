@@ -14,13 +14,33 @@ namespace FluentTest.Identity
             return builder;
         }
 
-        public static IdentityBuilder AddCustomerIdentity(this IServiceCollection services, Action<IServiceCollection> action)
+        public static IdentityBuilder AddCustomerIdentity(this IServiceCollection services)
         {
-            action(services);
+            services.Configure<IdentityOptions>(opt =>
+            {
+                // Password settings.
+                opt.Password.RequireDigit = true;
+                opt.Password.RequireLowercase = true;
+                opt.Password.RequireUppercase = true;
+                opt.Password.RequiredLength = 6;
+                opt.Password.RequiredUniqueChars = 1;
+
+                // Lockout settings.
+                opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                opt.Lockout.MaxFailedAccessAttempts = 5;
+                opt.Lockout.AllowedForNewUsers = true;
+
+                // Lockout settings.
+                opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                opt.Lockout.MaxFailedAccessAttempts = 5;
+                opt.Lockout.AllowedForNewUsers = true;
+            });
             services.AddAuthorization(options => options.AddPolicy("", policy => policy.Requirements.Add(new PermissionRequirement())));
             IdentityBuilder identityBuilder = services.AddIdentity<IdentityUser, IdentityRole>(options => { options.SignIn.RequireConfirmedPhoneNumber = true; })
                 .AddUserStore<UserStore>()
-                .AddRoleStore<RoleStore>();
+                .AddRoleStore<RoleStore>()
+                .AddDefaultTokenProviders();
+
             return identityBuilder;
         }
     }

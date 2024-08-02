@@ -3,7 +3,6 @@ using FluentTest.Identity.MySql;
 using FluentTest.Infrastructure;
 using FluentTest.Scheduled.MySql;
 using FluentTest.WebExtension;
-using Microsoft.AspNetCore.Identity;
 
 namespace FluentTest.WebApi
 {
@@ -17,31 +16,11 @@ namespace FluentTest.WebApi
                 .AddIdentityPart()
                 .AddScheduledPart();
 
-            builder.Services
-                .AddCustomerIdentity(x => IdentityMySqlBuilderExtensions.UseMySql(x))
-                .AddDefaultTokenProviders();
+            builder.Services.AddCustomerIdentity()
+                .UseMySql();
 
-            builder.Services.AddScheduledServices(x => ScheduledMySqlBuilderExtensions.UseMySql(x, builder.Configuration.GetSection("Quartz")));
-
-            builder.Services.Configure<IdentityOptions>(opt =>
-            {
-                // Password settings.
-                opt.Password.RequireDigit = true;
-                opt.Password.RequireLowercase = true;
-                opt.Password.RequireUppercase = true;
-                opt.Password.RequiredLength = 6;
-                opt.Password.RequiredUniqueChars = 1;
-
-                // Lockout settings.
-                opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                opt.Lockout.MaxFailedAccessAttempts = 5;
-                opt.Lockout.AllowedForNewUsers = true;
-
-                // Lockout settings.
-                opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                opt.Lockout.MaxFailedAccessAttempts = 5;
-                opt.Lockout.AllowedForNewUsers = true;
-            });
+            builder.Services.AddScheduledServices()
+                .UseMySql(builder.Configuration.GetSection("Quartz"));
 
             builder.Services.Configure<AppOption>(builder.Configuration.GetSection(nameof(AppOption)));
 
@@ -51,9 +30,7 @@ namespace FluentTest.WebApi
             builder.Services.AddHttpClient();
             builder.Logging.AddLog4Net();
 
-
             WebApplication app = builder.Build();
-
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

@@ -1,4 +1,5 @@
-﻿using FluentTest.Scheduled.Application;
+﻿using FluentTest.Scheduled;
+using FluentTest.Scheduled.Application;
 using FluentTest.Scheduled.Service;
 using FluentTest.Scheduled.Stories;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,12 +14,11 @@ namespace FluentTest.Identity
             return builder;
         }
 
-        public static IServiceCollection AddScheduledServices(this IServiceCollection services, Action<IServiceCollection> action)
+        public static ScheduledBuilder AddScheduledServices(this IServiceCollection services)
         {
-            action(services);
             services.AddScoped<IJobLogStore, JobLogStore>();
             services.AddScoped<JobManager>();
-            return services;
+            return new ScheduledBuilder(services);
         }
     }
 }

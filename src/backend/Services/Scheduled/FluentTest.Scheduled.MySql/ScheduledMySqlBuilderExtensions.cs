@@ -7,10 +7,10 @@ namespace FluentTest.Scheduled.MySql
 {
     public static class ScheduledMySqlBuilderExtensions
     {
-        public static IServiceCollection UseMySql(this IServiceCollection services, IConfigurationSection configurationSection)
+        public static ScheduledBuilder UseMySql(this ScheduledBuilder builder, IConfigurationSection configurationSection)
         {
-            services.Configure<QuartzOptions>(configurationSection);
-            services.AddQuartz(cfg =>
+            builder.Services.Configure<QuartzOptions>(configurationSection);
+            builder.Services.AddQuartz(cfg =>
             {
                 cfg.SchedulerName = "flent_test_scheduler";
                 cfg.SchedulerId = "flent_test_scheduler";
@@ -36,13 +36,13 @@ namespace FluentTest.Scheduled.MySql
                 });
                 cfg.UseDefaultThreadPool();
             });
-            services.AddQuartzHostedService(cfg =>
+            builder.Services.AddQuartzHostedService(cfg =>
             {
                 cfg.WaitForJobsToComplete = true;
                 cfg.AwaitApplicationStarted = true;
             });
-            services.AddScoped<IScheduledStoreExecutor, ScheduledMySqlStoreExecutor>();
-            return services;
+            builder.Services.AddScoped<IScheduledStoreExecutor, ScheduledMySqlStoreExecutor>();
+            return builder;
         }
     }
 }
