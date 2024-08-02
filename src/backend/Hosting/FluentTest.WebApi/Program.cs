@@ -4,49 +4,45 @@ using FluentTest.Infrastructure;
 using FluentTest.Scheduled.MySql;
 using FluentTest.WebExtension;
 
-namespace FluentTest.WebApi
+namespace FluentTest.WebApi;
+
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
+        WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+        // Add services to the container.
+        builder.Services.AddApiControllers()
+            .AddIdentityPart()
+            .AddScheduledPart();
+
+        builder.Services.AddCustomerIdentity().UseMySql();
+        builder.Services.AddScheduledServices().UseMySql(builder.Configuration.GetSection("Quartz"));
+
+        builder.Services.Configure<AppOption>(builder.Configuration.GetSection(nameof(AppOption)));
+
+        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+        builder.Services.AddHttpClient();
+        builder.Logging.AddLog4Net();
+
+        WebApplication app = builder.Build();
+
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
         {
-            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-            // Add services to the container.
-            builder.Services.AddApiControllers()
-                .AddIdentityPart()
-                .AddScheduledPart();
-
-            builder.Services.AddCustomerIdentity()
-                .UseMySql();
-
-            builder.Services.AddScheduledServices()
-                .UseMySql(builder.Configuration.GetSection("Quartz"));
-
-            builder.Services.Configure<AppOption>(builder.Configuration.GetSection(nameof(AppOption)));
-
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-            builder.Services.AddHttpClient();
-            builder.Logging.AddLog4Net();
-
-            WebApplication app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
-            app.UseExceptionHandler(err => err.UseCustomErrors());
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.MapControllers();
-
-            app.Run();
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
+
+        app.UseExceptionHandler(err => err.UseCustomErrors());
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        app.Run();
     }
 }

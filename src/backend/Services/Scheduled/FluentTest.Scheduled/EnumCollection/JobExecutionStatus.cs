@@ -5,14 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FluentTest.Scheduled.EnumCollection
-{
-    public enum JobExecutionStatus
-    {
-        [Description("成功")]
-        Success = 1,
+namespace FluentTest.Scheduled.EnumCollection;
 
-        [Description("错误")]
-        Error = 99,
-    }
+public enum JobExecutionStatus
+{
+    [Description("成功")]
+    Success = 1,
+
+    [Description("错误")]
+    Error = 99,
 }

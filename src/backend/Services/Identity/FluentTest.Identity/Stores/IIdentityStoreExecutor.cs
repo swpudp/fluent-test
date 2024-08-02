@@ -1,8 +1,7 @@
 ﻿using FluentTest.Infrastructure;
 
-namespace FluentTest.Identity.Stores
+namespace FluentTest.Identity.Stores;
+
+public interface IIdentityStoreExecutor : IStoreExecutor
 {
-    public interface IIdentityStoreExecutor : IStoreExecutor
-    {
-    }
 }

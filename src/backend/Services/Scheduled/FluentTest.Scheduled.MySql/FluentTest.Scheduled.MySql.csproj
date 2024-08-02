@@ -13,6 +13,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\..\Infrastructure\FluentTest.Infrastructure.MySql\FluentTest.Infrastructure.MySql.csproj" />
+	  <ProjectReference Include="..\..\..\Infrastructure\FluentTest.Infrastructure\FluentTest.Infrastructure.csproj" />
 	  <ProjectReference Include="..\FluentTest.Scheduled\FluentTest.Scheduled.csproj" />
 	</ItemGroup>
 

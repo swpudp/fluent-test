@@ -7,13 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FluentTest.Scheduled.Jobs
+namespace FluentTest.Scheduled.Jobs;
+
+public class MediatJob(IJobLogStore jobLogStore, ILogger<HttpJob> logger) : AbstractJob(jobLogStore, logger)
 {
-    public class MediatJob(IJobLogStore jobLogStore, ILogger<HttpJob> logger) : AbstractJob(jobLogStore, logger)
+    public override Task DoExecute(IJobExecutionContext context)
     {
-        public override Task DoExecute(IJobExecutionContext context)
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
 }

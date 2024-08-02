@@ -5,20 +5,19 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FluentTest.Infrastructure
+namespace FluentTest.Infrastructure;
+
+public sealed class BusinessExpcetion : Exception
 {
-    public sealed class BusinessExpcetion : Exception
+    public BusinessExpcetion() : base()
     {
-        public BusinessExpcetion() : base()
-        {
-        }
+    }
 
-        public BusinessExpcetion(string message) : base(message)
-        {
-        }
+    public BusinessExpcetion(string message) : base(message)
+    {
+    }
 
-        public BusinessExpcetion(string message, Exception innerException) : base(message, innerException)
-        {
-        }
+    public BusinessExpcetion(string message, Exception innerException) : base(message, innerException)
+    {
     }
 }

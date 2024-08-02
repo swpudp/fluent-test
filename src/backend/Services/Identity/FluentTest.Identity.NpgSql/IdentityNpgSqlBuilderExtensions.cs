@@ -1,15 +1,15 @@
 ﻿using FluentTest.Identity.Stores;
 using FluentTest.Infrastructure.NpgSql;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FluentTest.Identity.NpgSql
+namespace FluentTest.Identity.NpgSql;
+
+public static class IdentityNpgSqlBuilderExtensions
 {
-    public static class IdentityNpgSqlBuilderExtensions
+    public static IdentityBuilder UseNpgSql(this IdentityBuilder builder)
     {
-        public static IServiceCollection UseNpgSql(this IServiceCollection services)
-        {
-            services.AddScoped<IIdentityStoreExecutor, IdentityNpgSqlStoreExecutor>();
-            return services;
-        }
+        builder.Services.AddScoped<IIdentityStoreExecutor, IdentityNpgSqlStoreExecutor>();
+        return builder;
     }
 }

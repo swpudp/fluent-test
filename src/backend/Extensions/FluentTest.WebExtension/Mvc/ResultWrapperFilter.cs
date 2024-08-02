@@ -1,25 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace FluentTest.WebExtension.Mvc
+namespace FluentTest.WebExtension.Mvc;
+
+public class ResultWrapperFilter : IActionFilter, IOrderedFilter
 {
-    public class ResultWrapperFilter : IActionFilter, IOrderedFilter
+    public int Order => int.MaxValue - 10;
+
+    void IActionFilter.OnActionExecuted(ActionExecutedContext context)
     {
-        public int Order => int.MaxValue - 10;
-
-        void IActionFilter.OnActionExecuted(ActionExecutedContext context)
+        context.Result = context.Result switch
         {
-            context.Result = context.Result switch
-            {
-                ObjectResult result => new ObjectResult(new WrappedResult<object>(0, null, result.Value)),
-                EmptyResult => new ObjectResult(new WrappedResult(0, null)),
-                _ => context.Result
-            };
-        }
+            ObjectResult result => new ObjectResult(new WrappedResult<object>(0, null, result.Value)),
+            EmptyResult => new ObjectResult(new WrappedResult(0, null)),
+            _ => context.Result
+        };
+    }
 
-        void IActionFilter.OnActionExecuting(ActionExecutingContext context)
-        {
-            //do nothing
-        }
+    void IActionFilter.OnActionExecuting(ActionExecutingContext context)
+    {
+        //do nothing
     }
 }

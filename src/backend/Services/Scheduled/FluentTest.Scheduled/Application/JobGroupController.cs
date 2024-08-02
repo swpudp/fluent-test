@@ -5,12 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FluentTest.Scheduled.Application
-{
-    [ApiController]
-    [Route("[controller]")]
-    public class JobGroupController : ControllerBase
-    {
+namespace FluentTest.Scheduled.Application;
 
-    }
+[ApiController]
+[Route("[controller]")]
+public class JobGroupController : ControllerBase
+{
+
 }

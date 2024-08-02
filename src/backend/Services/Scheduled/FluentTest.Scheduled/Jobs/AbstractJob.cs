@@ -5,70 +5,69 @@ using FluentTest.Scheduled.Stories;
 using Microsoft.Extensions.Logging;
 using Quartz;
 
-namespace FluentTest.Scheduled.Jobs
+namespace FluentTest.Scheduled.Jobs;
+
+public abstract class AbstractJob(IJobLogStore jobLogStore, ILogger logger) : IJob
 {
-    public abstract class AbstractJob(IJobLogStore jobLogStore, ILogger logger) : IJob
+    private readonly ILogger _logger = logger;
+    private readonly IJobLogStore _jobLogStore = jobLogStore;
+
+    public async Task Execute(IJobExecutionContext context)
     {
-        private readonly ILogger _logger = logger;
-        private readonly IJobLogStore _jobLogStore = jobLogStore;
-
-        public async Task Execute(IJobExecutionContext context)
+        await BeforeExecute(context);
+        try
         {
-            await BeforeExecute(context);
-            try
-            {
-                await DoExecute(context);
-            }
-            catch (Exception ex)
-            {
-                context.Put("ex", ex);
-                _logger.LogError(ex, ex.Message);
-            }
-            await AfterExecute(context);
+            await DoExecute(context);
         }
-
-        public abstract Task DoExecute(IJobExecutionContext context);
-
-        private Task BeforeExecute(IJobExecutionContext context)
+        catch (Exception ex)
         {
-            return Task.CompletedTask;
+            context.Put("ex", ex);
+            _logger.LogError(ex, ex.Message);
         }
+        await AfterExecute(context);
+    }
 
-        private async Task AfterExecute(IJobExecutionContext context)
+    public abstract Task DoExecute(IJobExecutionContext context);
+
+    private Task BeforeExecute(IJobExecutionContext context)
+    {
+        return Task.CompletedTask;
+    }
+
+    private async Task AfterExecute(IJobExecutionContext context)
+    {
+        await CreateJobLog(context);
+    }
+
+    private async Task CreateJobLog(IJobExecutionContext context)
+    {
+        JobLog log = new JobLog
         {
-            await CreateJobLog(context);
-        }
+            Id = ObjectId.GenerateNewId().ToString(),
 
-        private async Task CreateJobLog(IJobExecutionContext context)
+            JobName = context.JobDetail.Key.Name,
+            JobGroup = context.JobDetail.Key.Group,
+            CreateTime = DateTime.Now,
+            CreatorId = "job",
+            CreatorName = "job",
+            StartTime = new DateTime(context.FireTimeUtc.Ticks),
+            EndTime = DateTime.Now,
+            Duration = context.JobRunTime.TotalMilliseconds
+        };
+        if (context.MergedJobDataMap.TryGetString("tenantId", out string tenantId))
         {
-            JobLog log = new JobLog
-            {
-                Id = ObjectId.GenerateNewId().ToString(),
-
-                JobName = context.JobDetail.Key.Name,
-                JobGroup = context.JobDetail.Key.Group,
-                CreateTime = DateTime.Now,
-                CreatorId = "job",
-                CreatorName = "job",
-                StartTime = new DateTime(context.FireTimeUtc.Ticks),
-                EndTime = DateTime.Now,
-                Duration = context.JobRunTime.TotalMilliseconds
-            };
-            if (context.MergedJobDataMap.TryGetString("tenantId", out string tenantId))
-            {
-                log.TenantId = tenantId;
-            }
-            object? exObj = context.Get("ex");
-            if (exObj is Exception e)
-            {
-                log.JobStatus = JobExecutionStatus.Error;
-                log.FailReason = e?.ToString();
-            }
-            else
-            {
-                log.JobStatus = JobExecutionStatus.Success;
-            }
-            await _jobLogStore.CreateAsync(log);
+            log.TenantId = tenantId;
         }
+        object? exObj = context.Get("ex");
+        if (exObj is Exception e)
+        {
+            log.JobStatus = JobExecutionStatus.Error;
+            log.FailReason = e?.ToString();
+        }
+        else
+        {
+            log.JobStatus = JobExecutionStatus.Success;
+        }
+        await _jobLogStore.CreateAsync(log);
     }
 }

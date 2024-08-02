@@ -4,6 +4,7 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>disable</Nullable>
+		<IsPublishable>true</IsPublishable>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -12,9 +13,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\Infrastructure\FluentTest.Infrastructure.NpgSql\FluentTest.Infrastructure.NpgSql.csproj" />
-	  <ProjectReference Include="..\..\..\Infrastructure\FluentTest.Infrastructure\FluentTest.Infrastructure.csproj" />
-	  <ProjectReference Include="..\FluentTest.Identity\FluentTest.Identity.csproj" />
+		<ProjectReference Include="..\..\..\Infrastructure\FluentTest.Infrastructure.NpgSql\FluentTest.Infrastructure.NpgSql.csproj" />
+		<ProjectReference Include="..\..\..\Infrastructure\FluentTest.Infrastructure\FluentTest.Infrastructure.csproj" />
+		<ProjectReference Include="..\FluentTest.Identity\FluentTest.Identity.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -2,10 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using FluentTest.Infrastructure.MySql;
 
-namespace FluentTest.Scheduled.MySql
+namespace FluentTest.Scheduled.MySql;
+
+public class ScheduledMySqlStoreExecutor(IConfiguration configuration) : AbstractMySqlStoreExecutor(configuration), IScheduledStoreExecutor
 {
-    public class ScheduledMySqlStoreExecutor(IConfiguration configuration) : AbstractMySqlStoreExecutor(configuration), IScheduledStoreExecutor
-    {
-        protected override string ConnectionName => "Scheduled";
-    }
+    protected override string ConnectionName => "Scheduled";
 }
