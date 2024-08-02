@@ -3,6 +3,7 @@ using FluentTest.Identity.MySql;
 using FluentTest.Infrastructure;
 using FluentTest.Scheduled.MySql;
 using FluentTest.WebExtension;
+using System.Runtime.Loader;
 
 namespace FluentTest.WebApi;
 
@@ -25,6 +26,7 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddHttpClient();
+        builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AssemblyLoadContext.Default.Assemblies.Where(x => x.GetName().FullName.StartsWith("FluentTest")).ToArray()));
         builder.Logging.AddLog4Net();
 
         WebApplication app = builder.Build();

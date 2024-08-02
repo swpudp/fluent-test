@@ -7,6 +7,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Quartz.AspNetCore" Version="3.11.0" />
 		<PackageReference Include="Quartz.Serialization.SystemTextJson" Version="3.11.0" />
 	</ItemGroup>
 
