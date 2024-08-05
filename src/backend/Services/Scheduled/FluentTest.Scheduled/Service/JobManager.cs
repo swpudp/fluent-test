@@ -1,16 +1,19 @@
 ﻿using FluentTest.Infrastructure;
 using FluentTest.Scheduled.EnumCollection;
 using FluentTest.Scheduled.Jobs;
+using FluentTest.Scheduled.Model;
 using FluentTest.Scheduled.Request;
 using FluentTest.Scheduled.Response;
+using FluentTest.Scheduled.Stories;
 using Quartz;
 using Quartz.Impl.Matchers;
 
 namespace FluentTest.Scheduled.Service;
 
-public class JobManager(ISchedulerFactory schedulerFactory)
+public class JobManager(ISchedulerFactory schedulerFactory, IJobLogStore jobLogStore)
 {
     private readonly ISchedulerFactory _schedulerFactory = schedulerFactory;
+    private readonly IJobLogStore _jobLogStore = jobLogStore;
 
     public IDictionary<JobType, Func<AddJobRequest, IJobDetail>> JobDelegates { get; } = new Dictionary<JobType, Func<AddJobRequest, IJobDetail>>
     {
@@ -214,5 +217,11 @@ public class JobManager(ISchedulerFactory schedulerFactory)
                 .WithIdentity(JobKey.Create(request.JobName, request.JobGroup))
                 .WithDescription(request.Descrption)
                 .Build();
+    }
+
+
+    public Task<IList<JobLog>> ListJobLogsAsync(string jobName, string jobGroup)
+    {
+        return _jobLogStore.ListJobLogsAsync(jobName, jobGroup);
     }
 }

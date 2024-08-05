@@ -1,5 +1,4 @@
 ﻿using FluentTest.Identity.Stores;
-using FluentTest.Infrastructure.NpgSql;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 

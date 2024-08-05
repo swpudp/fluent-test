@@ -6,7 +6,7 @@ using FluentTest.Scheduled.MySql;
 using FluentTest.WebExtension;
 using System.Runtime.Loader;
 
-namespace FluentTest.WebApi;
+namespace FluentTest.Mgt.M.WebApi;
 
 public class Program
 {

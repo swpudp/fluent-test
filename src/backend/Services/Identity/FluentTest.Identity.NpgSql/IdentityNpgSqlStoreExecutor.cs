@@ -1,7 +1,8 @@
 ﻿using FluentTest.Identity.Stores;
+using FluentTest.Infrastructure.NpgSql;
 using Microsoft.Extensions.Configuration;
 
-namespace FluentTest.Infrastructure.NpgSql;
+namespace FluentTest.Identity.NpgSql;
 
 public class IdentityNpgSqlStoreExecutor(IConfiguration configuration) : AbstractNpgSqlStoreExecutor(configuration), IIdentityStoreExecutor
 {

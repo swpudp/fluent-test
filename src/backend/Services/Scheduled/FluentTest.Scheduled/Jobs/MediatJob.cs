@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using Quartz;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
 
 namespace FluentTest.Scheduled.Jobs;
 
@@ -27,12 +26,7 @@ public class MediatJob(IMediator mediator, IJobLogStore jobLogStore, ILogger<Htt
             json.Add(key, context.MergedJobDataMap.GetString(key));
         }
         Type requestType = TypeLoaderUtil.LoadRequestHandler(typeName);
-        JsonSerializerOptions serializerOptions = new JsonSerializerOptions
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            NumberHandling = JsonNumberHandling.AllowReadingFromString
-        };
-        object requestObj = json.Deserialize(requestType, serializerOptions);
+        object requestObj = json.Deserialize(requestType, _jsonSerializerOptions);
         if (requestObj is not IRequest request)
         {
             throw new BusinessExpcetion("未找到类型名称");

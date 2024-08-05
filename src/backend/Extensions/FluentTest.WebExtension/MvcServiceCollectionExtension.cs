@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Http;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace FluentTest.WebExtension;
 
@@ -12,10 +14,16 @@ public static class MvcServiceCollectionExtension
 {
     public static IMvcBuilder AddApiControllers(this IServiceCollection services)
     {
-        IMvcBuilder mvcBuilder = services.AddControllers();
+        IMvcBuilder mvcBuilder = services.AddControllers().AddJsonOptions(UseCustomJsonOptions);
         services.TryAddEnumerable(ServiceDescriptor.Transient<IApplicationModelProvider, ResponseWrapApplicationModelProvider>());
         mvcBuilder.ConfigureApiBehaviorOptionsEx();
         return mvcBuilder;
+    }
+
+    private static void UseCustomJsonOptions(this JsonOptions jsonOptions)
+    {
+        jsonOptions.JsonSerializerOptions.NumberHandling = JsonNumberHandling.AllowReadingFromString;
+        jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     }
 
     public static IMvcBuilder ConfigureApiBehaviorOptionsEx(this IMvcBuilder builder)

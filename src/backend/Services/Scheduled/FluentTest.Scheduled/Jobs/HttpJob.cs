@@ -4,7 +4,6 @@ using Quartz;
 using Quartz.Util;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text.Json;
 
 namespace FluentTest.Scheduled.Jobs;
 
@@ -29,9 +28,7 @@ public class HttpJob(IJobLogStore jobLogStore, IHttpClientFactory httpClientFact
         if (string.Compare(method, "post", StringComparison.OrdinalIgnoreCase) == 0)
         {
             MediaTypeHeaderValue mediaType = new MediaTypeHeaderValue("application/json");
-            JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions();
-            jsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-            HttpContent content = JsonContent.Create(new { });
+            HttpContent content = JsonContent.Create(new { }, mediaType, _jsonSerializerOptions);
             httpResponse = await httpClient.PostAsync(url, content);
         }
         else

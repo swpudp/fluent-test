@@ -1,10 +1,9 @@
-﻿using FluentTest.Scheduled;
-using FluentTest.Scheduled.Application;
+﻿using FluentTest.Scheduled.Application;
 using FluentTest.Scheduled.Service;
 using FluentTest.Scheduled.Stories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FluentTest.Identity;
+namespace FluentTest.Scheduled;
 
 public static class ScheduledBuilderExtensions
 {

@@ -1,12 +1,12 @@
 using FluentTest.Identity;
-using FluentTest.Identity.MySql;
+using FluentTest.Identity.MsSql;
 using FluentTest.Infrastructure;
 using FluentTest.Scheduled;
-using FluentTest.Scheduled.MySql;
+using FluentTest.Scheduled.MsSql;
 using FluentTest.WebExtension;
 using System.Runtime.Loader;
 
-namespace FluentTest.WebApi;
+namespace FluentTest.Mgt.S.WebApi;
 
 public class Program
 {
@@ -18,8 +18,8 @@ public class Program
             .AddIdentityPart()
             .AddScheduledPart();
 
-        builder.Services.AddCustomerIdentity().UseMySql();
-        builder.Services.AddScheduledServices().UseMySql(builder.Configuration.GetSection("Quartz"));
+        builder.Services.AddCustomerIdentity().UseMsSql();
+        builder.Services.AddScheduledServices().UseMsSql(builder.Configuration.GetSection("Quartz"));
 
         builder.Services.Configure<AppOption>(builder.Configuration.GetSection(nameof(AppOption)));
 

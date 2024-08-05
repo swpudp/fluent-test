@@ -1,6 +1,8 @@
-﻿using FluentTest.Scheduled.Request;
+﻿using FluentTest.Scheduled.Model;
+using FluentTest.Scheduled.Request;
 using FluentTest.Scheduled.Response;
 using FluentTest.Scheduled.Service;
+using FluentTest.Scheduled.Stories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FluentTest.Scheduled.Application;
@@ -19,6 +21,16 @@ public class JobManagerController(JobManager jobManager) : ControllerBase
     public async Task<List<JobView>> ListJobsAsync()
     {
         return await _jobManager.ListJobsAsync();
+    }
+
+    /// <summary>
+    /// 获取任务的日志列表
+    /// </summary>
+    /// <returns>日志列表</returns>
+    [HttpGet("jobLogs")]
+    public async Task<IList<JobLog>> ListJobLogsAsync(string jobName, string jogGroup)
+    {
+        return await _jobManager.ListJobLogsAsync(jobName, jogGroup);
     }
 
     /// <summary>

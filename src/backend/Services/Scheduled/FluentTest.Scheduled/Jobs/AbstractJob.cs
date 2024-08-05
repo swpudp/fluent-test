@@ -4,6 +4,8 @@ using FluentTest.Scheduled.Model;
 using FluentTest.Scheduled.Stories;
 using Microsoft.Extensions.Logging;
 using Quartz;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace FluentTest.Scheduled.Jobs;
 
@@ -11,6 +13,11 @@ public abstract class AbstractJob(IJobLogStore jobLogStore, ILogger logger) : IJ
 {
     private readonly ILogger _logger = logger;
     private readonly IJobLogStore _jobLogStore = jobLogStore;
+    protected readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        NumberHandling = JsonNumberHandling.AllowReadingFromString
+    };
 
     public async Task Execute(IJobExecutionContext context)
     {
@@ -44,7 +51,6 @@ public abstract class AbstractJob(IJobLogStore jobLogStore, ILogger logger) : IJ
         JobLog log = new JobLog
         {
             Id = ObjectId.GenerateNewId().ToString(),
-
             JobName = context.JobDetail.Key.Name,
             JobGroup = context.JobDetail.Key.Group,
             CreateTime = DateTime.Now,
