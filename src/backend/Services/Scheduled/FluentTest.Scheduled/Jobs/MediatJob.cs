@@ -20,13 +20,9 @@ public class MediatJob(IMediator mediator, IJobLogStore jobLogStore, ILogger<Htt
         {
             throw new BusinessExpcetion("未找到类型名称");
         }
-        JsonObject json = new JsonObject();
-        foreach (string key in context.MergedJobDataMap.Keys)
-        {
-            json.Add(key, context.MergedJobDataMap.GetString(key));
-        }
+        JsonObject json = context.MergedJobDataMap.BuildJsonObject("type");
         Type requestType = TypeLoaderUtil.LoadRequestHandler(typeName);
-        object requestObj = json.Deserialize(requestType, _jsonSerializerOptions);
+        object requestObj = json.Deserialize(requestType, ConstUtil.JsonSerializerOptions);
         if (requestObj is not IRequest request)
         {
             throw new BusinessExpcetion("未找到类型名称");

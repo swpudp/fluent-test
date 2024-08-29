@@ -22,7 +22,7 @@ public static class ScheduledMsSqlBuilderExtensions
                 p.PerformSchemaValidation = false;
                 p.UseProperties = true;
                 p.RetryInterval = TimeSpan.FromSeconds(15);
-                p.UsePostgres(s =>
+                p.UseSqlServer(s =>
                 {
                     s.TablePrefix = "qrtz_";
                     s.ConnectionStringName = "Scheduled";

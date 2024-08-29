@@ -2,7 +2,6 @@
 using FluentTest.Scheduled.Request;
 using FluentTest.Scheduled.Response;
 using FluentTest.Scheduled.Service;
-using FluentTest.Scheduled.Stories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FluentTest.Scheduled.Application;
