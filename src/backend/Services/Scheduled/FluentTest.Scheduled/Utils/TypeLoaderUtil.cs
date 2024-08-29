@@ -7,7 +7,7 @@ namespace FluentTest.Scheduled.Utils
 {
     internal static class TypeLoaderUtil
     {
-        private static readonly IDictionary<string, Type> _handlerNameList = new ConcurrentDictionary<string, Type>();
+        private static readonly ConcurrentDictionary<string, Type> _handlerNameList = new ConcurrentDictionary<string, Type>();
 
         public static Type LoadRequestHandler(string name)
         {
@@ -22,7 +22,7 @@ namespace FluentTest.Scheduled.Utils
                 {
                     continue;
                 }
-                _handlerNameList.Add(name, type);
+                _handlerNameList[name] = type;
                 return type;
             }
             throw new Infrastructure.BusinessExpcetion("未找到执行器");
