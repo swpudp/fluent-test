@@ -19,7 +19,7 @@ public class Program
             .AddScheduledPart();
 
         builder.Services.AddCustomerIdentity().UseMySql();
-        builder.Services.AddScheduledServices().UseMySql(builder.Configuration.GetSection("Quartz"));
+        builder.Services.AddScheduledServices(builder.Configuration).UseMySql();
 
         builder.Services.Configure<AppOption>(builder.Configuration.GetSection(nameof(AppOption)));
 

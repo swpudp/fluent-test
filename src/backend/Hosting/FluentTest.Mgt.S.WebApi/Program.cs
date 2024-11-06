@@ -19,7 +19,7 @@ public class Program
             .AddScheduledPart();
 
         builder.Services.AddCustomerIdentity().UseMsSql();
-        builder.Services.AddScheduledServices().UseMsSql(builder.Configuration.GetSection("Quartz"));
+        builder.Services.AddScheduledServices(builder.Configuration).UseMsSql();
 
         builder.Services.Configure<AppOption>(builder.Configuration.GetSection(nameof(AppOption)));
 

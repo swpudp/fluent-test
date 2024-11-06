@@ -207,7 +207,7 @@ public class JobManager(ISchedulerFactory schedulerFactory, IJobLogStore jobLogS
     {
         return JobBuilder.Create<HttpJob>()
                 .WithIdentity(JobKey.Create(request.JobName, request.JobGroup))
-                .WithDescription(request.Descrption)
+                .WithDescription(request.Description)
                 .Build();
     }
 
@@ -215,7 +215,7 @@ public class JobManager(ISchedulerFactory schedulerFactory, IJobLogStore jobLogS
     {
         return JobBuilder.Create<MediatJob>()
                 .WithIdentity(JobKey.Create(request.JobName, request.JobGroup))
-                .WithDescription(request.Descrption)
+                .WithDescription(request.Description)
                 .Build();
     }
 

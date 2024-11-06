@@ -13,13 +13,14 @@ public class Program
     public static void Main(string[] args)
     {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
         // Add services to the container.
         builder.Services.AddApiControllers()
             .AddIdentityPart()
             .AddScheduledPart();
 
         builder.Services.AddCustomerIdentity().UseNpgSql();
-        builder.Services.AddScheduledServices().UseNpgSql(builder.Configuration.GetSection("Quartz"));
+        builder.Services.AddScheduledServices(builder.Configuration).UseNpgSql();
 
         builder.Services.Configure<AppOption>(builder.Configuration.GetSection(nameof(AppOption)));
 

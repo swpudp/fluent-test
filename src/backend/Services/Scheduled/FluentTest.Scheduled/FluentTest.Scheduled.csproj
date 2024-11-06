@@ -20,8 +20,9 @@
 
 	<ItemGroup>
 		<PackageReference Include="Dapper.Extensions.Expression" Version="1.1.2" />
-		<PackageReference Include="Quartz" Version="3.13.0" />
 		<PackageReference Include="MediatR" Version="12.4.0" />
+		<PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.13.0" />
+		<PackageReference Include="Quartz.Extensions.Hosting" Version="3.13.0" />
 	</ItemGroup>
 
 	<ItemGroup>
